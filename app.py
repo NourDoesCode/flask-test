@@ -1,12 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 app =Flask(__name__ , template_folder='templates')
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def index():
-    myvalue = 'Nourpow'
-    myresult = 9+10
-    mylist=[10,20,30,40,50]
-    return render_template('index.html', myvalue=myvalue, myresult=myresult, mylist=mylist)
+    if request.method=='GET':
+        return render_template('index.html')
+    elif request.method == 'POST':
+        username=request.form.get('username')
+        password=request.form.get('password')
+        if username == 'nour' and password =='123456':
+            return 'success!'
+        else: return 'failed!'
 
 
 if __name__ == '__main__':
